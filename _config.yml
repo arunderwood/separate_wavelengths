@@ -100,6 +100,13 @@ asset_pipeline:
   html_minifier:
     enable: true
 
+# BrowserSync
+## https://github.com/hexojs/hexo-browsersync
+browsersync:
+  logLevel: "warn"
+  ghostMode:
+    scroll: true
+
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
