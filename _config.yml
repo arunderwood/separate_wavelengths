@@ -7,7 +7,7 @@ title: Separate Wavelengths
 subtitle:
 description: A blog about technology, radio, and photography
 author: Arunderwood
-language: en
+language: default
 timezone:
 
 # URL
@@ -73,6 +73,17 @@ pagination_dir: page
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
 theme: landscape
+
+# Feed
+## https://github.com/hexojs/hexo-generator-feed
+feed:
+  type: atom
+  path: atom.xml
+  limit: 20
+  hub:
+  content:
+  content_limit: 140
+  content_limit_delim: ' '
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
