@@ -1,0 +1,2 @@
+serve:
+	hexo server
