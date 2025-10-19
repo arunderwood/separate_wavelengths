@@ -1,2 +1,5 @@
+build:
+	npx hexo generate
+
 serve:
-	hexo server
+	npx hexo server
