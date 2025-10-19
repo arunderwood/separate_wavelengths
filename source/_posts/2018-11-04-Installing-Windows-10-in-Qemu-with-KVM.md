@@ -73,19 +73,19 @@ open vnc://<host>:5900
 There will be a few extra steps to install Windows above and beyond a normal install.  Because the accelerated VirtIO drivers required to interface with the virtual disk controller are not bundled with Windows, we need to load them into the installer before it will be able to talk to the virtual hard drive.
 
 When asked to do an _Upgrade_ or a _Custom install_, select _Custom Install_.
-{% asset_img "Windows 10 Install - 1 - Custom Install.png" %}
+![Windows Setup screen showing Custom Install option selected](<Windows 10 Install - 1 - Custom Install.png>)
 
 Select _Load Driver_ to point the installer to your driver file.
-{% asset_img "Windows 10 Install - 2 - Load Driver.png" %}
+![Windows Setup disk selection screen with no drives found, highlighting the Load Driver button](<Windows 10 Install - 2 - Load Driver.png>)
 
 Navigate to `E:\viostor\w10\amd64`
-{% asset_img "Windows 10 Install - 3 - viostor driver.png" %}
+![Browse for Folder dialog showing viostor driver folder structure with w10/amd64 directory selected](<Windows 10 Install - 3 - viostor driver.png>)
 
 There should only be one option, the VirtIO SCSI Controller.
-{% asset_img "Windows 10 Install - 4 - select driver.png" %}
+![Driver selection screen showing Red Hat VirtIO SCSI controller driver](<Windows 10 Install - 4 - select driver.png>)
 
 The installer should now see your virtual disk.  Hit next to let Windows automatically partition it.
-{% asset_img "Windows 10 Install - 5 - Partition.png" %}
+![Windows disk selection screen now showing Drive 0 Unallocated Space with 75.0 GB available](<Windows 10 Install - 5 - Partition.png>)
 
 ## Next steps
 
