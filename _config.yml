@@ -5,7 +5,8 @@
 # Site
 title: Separate Wavelengths
 subtitle: A blog about technology, radio, and photography
-description:
+description: "A blog about technology, radio, and photography by Arunderwood. DIY electronics, home automation, Linux, virtualization, and amateur radio projects."
+keywords: "technology, radio, photography, DIY, electronics, home automation, Linux, KVM, Qemu, ESP8266, Z-Wave, UPS"
 author: Arunderwood
 language: en
 timezone:
@@ -90,21 +91,37 @@ feed:
   content:
   content_limit: 140
   content_limit_delim: ' '
+  enable_cdata: true
 
-# Asset Pipeline
-## https://github.com/hexojs/hexo-asset-pipeline
-asset_pipeline:
-  revisioning:
-    enable: false
-  clean_css:
+# Sitemap
+## https://github.com/ludoviclefevre/hexo-generator-seo-friendly-sitemap
+sitemap:
+  path: sitemap.xml
+  tag: true
+  category: true
+
+# Lightning Minify
+## https://github.com/theme-shoka-x/hexo-lightning-minify
+## Modern, fast minification using lightningcss and minify-html
+minify:
+  html:
     enable: true
-  uglify_js:
+    exclude:
+  css:
     enable: true
-  imagemin:
+    exclude:
+      - '*.min.css'
+  js:
     enable: true
-    multipass: true
-  html_minifier:
-    enable: true
+    exclude:
+      - '*.min.js'
+
+# External Links
+## https://github.com/hexojs/hexo-filter-nofollow
+nofollow:
+  enable: true
+  field: site
+  exclude:
 
 # BrowserSync
 ## https://github.com/hexojs/hexo-browsersync
