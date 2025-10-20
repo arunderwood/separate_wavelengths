@@ -12,14 +12,14 @@
     "hexo-generator-category": "^2.0.0",
     "hexo-generator-feed": "^3.0.0",
     "hexo-generator-index": "^4.0.0",
-    "hexo-generator-seo-friendly-sitemap": "^0.2.1",
+    "hexo-generator-sitemap": "^3.0.1",
     "hexo-generator-tag": "^2.0.0",
     "hexo-lightning-minify": "^0.2.2",
     "hexo-renderer-marked": "^7.0.1",
     "hexo-theme-landscape": "^1.1.0"
   },
   "devDependencies": {
-    "hexo-server": "^3.0.0",
-    "hexo-browsersync": "^0.3.0"
+    "hexo-browsersync": "^0.3.0",
+    "hexo-server": "^3.0.0"
   }
 }

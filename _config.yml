@@ -94,11 +94,10 @@ feed:
   enable_cdata: true
 
 # Sitemap
-## https://github.com/ludoviclefevre/hexo-generator-seo-friendly-sitemap
+## https://github.com/hexojs/hexo-generator-sitemap
 sitemap:
   path: sitemap.xml
-  tag: true
-  category: true
+
 
 # Lightning Minify
 ## https://github.com/theme-shoka-x/hexo-lightning-minify
