@@ -22,7 +22,9 @@ Here's the short version; the rest of the post walks down the stack.
 
 ## Layer 1 — Physical: the radio and the modem
 
-At the bottom is an ordinary VHF FM radio, used as a pipe for audio tones. The computer generates one tone for a binary `1` ("mark") and another for a binary `0` ("space"), feeds that audio into the radio's mic input, and the radio transmits it as ordinary FM voice — it has no idea it's carrying data. The receiving station does the reverse. This scheme of encoding data by shifting between audio frequencies is called **audio frequency-shift keying**, or AFSK.
+At the bottom is an ordinary VHF FM radio, used as a pipe for audio tones. The computer generates two audio tones — one called **mark** and one called **space** — feeds that audio into the radio's mic input, and the radio transmits it as ordinary FM voice. It has no idea it's carrying data. The receiving station does the reverse. This scheme of encoding data by shifting between audio frequencies is called **audio frequency-shift keying**, or AFSK.
+
+The bits are not a direct 1:1 mapping to the two tones. Amateur packet uses NRZI encoding on top of AFSK: [per Wikipedia's Packet radio article](https://en.wikipedia.org/wiki/Packet_radio), "a data zero bit is encoded by a change in tones and a data one bit is encoded by no change in tones." The data rides in the *transitions* between mark and space, not in which tone is present at any given instant.
 
 The dominant flavor on VHF is 1200 bits per second using **Bell 202 tones** — 1200 Hz for mark, 2200 Hz for space — a standard originally designed for 1970s telephone modems ([Wikipedia: Packet radio](https://en.wikipedia.org/wiki/Packet_radio)). The practical consequence is that 1200 bit/s is very slow by modern standards, which is why almost everything above this layer is built around short messages and efficient retries rather than throughput.
 
@@ -37,7 +39,7 @@ A TNC can be dedicated hardware — the [Mobilinkd TNC3](https://store.mobilinkd
 
 Direwolf exposes its framed output to host applications over two interfaces:
 
-- **KISS** — a deliberately dumb pipe: the host sends and receives raw AX.25 frames and the TNC just modulates and demodulates. [Designed by Mike Chepponis (K3MC) and Phil Karn (KA9Q) in 1987](https://en.wikipedia.org/wiki/KISS_(TNC)) to move protocol logic out of "smart" TNCs and into the host.
+- **KISS** — a deliberately dumb pipe: the host sends and receives raw AX.25 frames and the TNC just modulates and demodulates. [Designed by Mike Cheponis (K3MC) and Phil Karn (KA9Q) in 1987](https://en.wikipedia.org/wiki/KISS_(TNC)) to move protocol logic out of "smart" TNCs and into the host.
 - **AGW** — an alternative host interface originally from SV2AGW's AGW Packet Engine. It exposes more structured per-port information than KISS, and several terminal programs prefer it. Direwolf's README lists both ["KISS Interface (TCP/IP, serial port, Bluetooth) & AGW network Interface (TCP/IP)"](https://github.com/wb2osz/direwolf).
 
 ## Layer 2 — Data link: AX.25
@@ -81,9 +83,9 @@ From the user's perspective, the topology does not have to be known in advance. 
 
 ## Layer 4 — Transport
 
-NET/ROM does not stop at routing. It also provides a transport-layer **circuit** — a reliable, ordered, end-to-end byte stream between two nodes, layered on top of whatever AX.25 hops it took to get there. "Reliable end-to-end stream" is the same promise TCP makes: bytes sent at one end come out the other end exactly once, in the order they were sent, with retransmissions hidden from the application.
+NET/ROM does not stop at routing. It also provides a transport-layer **circuit** — a reliable, ordered, end-to-end connection between two nodes, layered on top of whatever AX.25 hops it took to get there. "Reliable and ordered" is the same guarantee TCP makes: data sent at one end comes out the other end exactly once, in the order it was sent, with retransmissions hidden from the application.
 
-The Linux [`netrom(4)` man page](https://www.mankier.com/4/netrom) captures this by noting that NET/ROM "only supports connected mode" and presents itself to applications as a `SOCK_SEQPACKET` socket — a socket type that [`socket(2)`](https://man7.org/linux/man-pages/man2/socket.2.html) defines as "a sequenced, reliable, two-way connection-based data transmission path."
+Unlike TCP, though, NET/ROM preserves message boundaries. The Linux [`netrom(4)` man page](https://www.mankier.com/4/netrom) notes that NET/ROM "only supports connected mode" and presents itself to applications as a `SOCK_SEQPACKET` socket, which [`socket(2)`](https://man7.org/linux/man-pages/man2/socket.2.html) defines as "a sequenced, reliable, two-way connection-based data transmission path ... for datagrams of fixed maximum length." TCP by contrast uses `SOCK_STREAM`, which is an undifferentiated byte stream where send boundaries are not preserved.
 
 ## Layer 7 — Applications
 
@@ -97,7 +99,7 @@ The forwarding rule is postal-routing in reverse: broadest on the right, most sp
 
 Concretely: a neighboring BBS that knows about `#WWA` (Western Washington) keeps a `W9CPZ.#WWA.WA.USA.NOAM` message local; one that only recognizes `.USA.NOAM` punts it toward a long-haul gateway.
 
-This addressing is an application-layer convention. NET/ROM moves individual sessions between two specific node callsigns; the BBS hierarchy describes where a *message* should ultimately land, regardless of which links carried it. A message may pass through several BBSes, each opening its own NET/ROM session to the next, until it finally lands in a mailbox.
+This addressing is an application-layer convention. NET/ROM moves individual sessions between two specific node callsigns; the BBS hierarchy describes where a *message* should ultimately land, regardless of which links carried it. A message may pass through several BBSes on its way, each opening its own connected-mode session to the next — sometimes a direct AX.25 link, sometimes a NET/ROM circuit over multiple hops — until it finally lands in a mailbox.
 
 ## Coming up in part 2
 
