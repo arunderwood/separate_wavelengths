@@ -6,7 +6,7 @@ tags: Packet Radio, AX.25, NET/ROM, Amateur Radio, BPQ32, Direwolf
 
 This is the first in a short series about VHF packet radio. Later posts will cover a specific station build and on-air operation; this one is a reference — a map of the protocols and software involved, and how they relate. Packet has a lot of acronyms. Most of them make more sense once you see how they layer onto each other — and which pieces are drop-in alternatives, like Direwolf standing in for a hardware TNC.
 
-HF packet has its own quirks (different tones, LSB instead of FM, sparser activity) and may get its own post later.
+HF packet has its own quirks (different tones, SSB instead of FM, sparser activity) and may get its own post later.
 
 ## Packet Radio and the OSI model
 
