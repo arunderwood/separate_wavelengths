@@ -122,13 +122,6 @@ nofollow:
   field: site
   exclude:
 
-# BrowserSync
-## https://github.com/hexojs/hexo-browsersync
-browsersync:
-  logLevel: "warn"
-  ghostMode:
-    scroll: true
-
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
